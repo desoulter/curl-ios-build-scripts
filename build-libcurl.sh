@@ -10,7 +10,7 @@ PROTOCOLS="--enable-http --disable-rtsp --disable-ftp --disable-file --disable-l
            --disable-rtsp --disable-dict --disable-telnet --disable-tftp \
            --disable-pop3 --disable-imap --disable-smtp --disable-gopher"
 
-CONFIGURE_FLAGS="--with-darwinssl --without-ssl --without-libssh2 --without-ca-bundle ${PROTOCOLS}"
+CONFIGURE_FLAGS="--without-darwinssl --without-ssl --without-libssh2 --without-ca-bundle --without-ldap ${PROTOCOLS}"
 
 DIR=`pwd`
 XCODE_SELECT="xcode-select"
