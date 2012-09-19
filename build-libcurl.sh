@@ -16,7 +16,7 @@ DIR=`pwd`
 XCODE_SELECT="xcode-select"
 XCODE=$(${XCODE_SELECT} --print-path)
 SDK_VERSION="5.1"
-ARCHS="i386 armv7"
+ARCHS="i386 armv7 armv6"
 
 
 # Download or use existing tar.gz
@@ -89,17 +89,23 @@ echo "* Creating binaries for ${LIBNAME}..."
 
 I386_LIB="${DIR}/bin/${LIBNAME}-${VERSION}/i386/lib/${LIBNAME}.a"
 ARMV7_LIB="${DIR}/bin/${LIBNAME}-${VERSION}/armv7/lib/${LIBNAME}.a"
+ARMV6_LIB="${DIR}/bin/${LIBNAME}-${VERSION}/armv6/lib/${LIBNAME}.a"
 
 # Create a single .a file for all architectures
-if [ -e ${I386_LIB} -a -e ${ARMV7_LIB} ]
+if [ -e ${I386_LIB} -a -e ${ARMV7_LIB} -a -e ${ARMV6_LIB} ]
 then
-    lipo -create ${I386_LIB} ${ARMV7_LIB} -output "${DIR}/lib/${LIBNAME}.a"
+lipo -create ${I386_LIB} ${ARMV7_LIB} ${ARMV6_LIB} -output "${DIR}/lib/${LIBNAME}.a"
 fi
 
 # Create a single .a file for all arm architectures
 if [ -e ${ARMV7_LIB} ]
 then
     lipo -create ${ARMV7_LIB} -output "${DIR}/lib/${LIBNAME}-armv7.a"
+fi
+
+if [ -e ${ARMV6_LIB} ]
+then
+lipo -create ${ARMV7_LIB} -output "${DIR}/lib/${LIBNAME}-armv6.a"
 fi
 
 # Create a single .a file for i386 (iphonesimulator or macosx both generate the exact same output)
